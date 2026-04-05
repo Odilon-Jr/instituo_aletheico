@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instituto Aletheico — Ecoexistência</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep:  #1f4027;
+    --green-mid:   #3d6b4a;
+    --green-soft:  #5f9970;
+    --green-light: #98cca8;
+    --green-pale:  #d8eede;
+    --green-ghost: #f0faf3;
+    --cream:       #fdfaf6;
+    --text-dark:   #162318;
+    --text-mid:    #3a5741;
+    --text-muted:  #627a6b;
+    --border:      rgba(63,107,74,0.16);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--cream);color:var(--text-dark);overflow-x:hidden;}
+
+  /* ── NAV ── */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:1.1rem 5%;background:rgba(253,250,246,0.93);
+    backdrop-filter:blur(14px);border-bottom:1px solid var(--border);
+    transition:box-shadow .3s;
+  }
+  nav.scrolled{box-shadow:0 2px 28px rgba(31,64,39,.08);}
+  .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+  .nav-logo-mark{
+    width:36px;height:36px;border-radius:50%;
+    background:var(--green-deep);display:flex;align-items:center;justify-content:center;
+  }
+  .nav-logo-mark svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:1.8;}
+  .nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-weight:600;color:var(--green-deep);letter-spacing:.02em;}
+  .nav-links{display:flex;gap:2rem;list-style:none;}
+  .nav-links a{font-size:.8rem;font-weight:500;color:var(--text-mid);text-decoration:none;letter-spacing:.07em;text-transform:uppercase;transition:color .2s;}
+  .nav-links a:hover{color:var(--green-deep);}
+  .nav-cta{
+    font-size:.8rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+    padding:.58rem 1.35rem;background:var(--green-deep);color:#fff;
+    border-radius:100px;text-decoration:none;transition:background .2s,transform .15s;
+  }
+  .nav-cta:hover{background:var(--green-mid);transform:translateY(-1px);}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;border:none;background:none;padding:4px;}
+  .hamburger span{display:block;width:22px;height:1.5px;background:var(--green-deep);transition:.3s;}
+
+  /* ── HERO ── */
+  .hero{
+    min-height:100vh;display:flex;align-items:center;
+    background:var(--green-ghost);position:relative;overflow:hidden;padding-top:80px;
+  }
+  .hero-orbs{
+    position:absolute;right:-60px;top:50%;transform:translateY(-50%);
+    width:580px;height:580px;pointer-events:none;
+  }
+  .hero-orbs circle{fill:none;stroke:var(--green-light);}
+  .hero-content{position:relative;max-width:1200px;margin:0 auto;padding:5rem 5%;}
+  .hero-tag{
+    display:inline-flex;align-items:center;gap:8px;
+    font-size:.72rem;font-weight:600;letter-spacing:.13em;text-transform:uppercase;
+    color:var(--green-mid);background:rgba(95,153,112,.1);
+    padding:.38rem .95rem;border-radius:100px;border:1px solid rgba(95,153,112,.28);
+    margin-bottom:2rem;animation:fadeUp .8s ease both;
+  }
+  .hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green-soft);display:block;}
+  h1{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(2.8rem,6vw,5.4rem);
+    font-weight:300;line-height:1.07;color:var(--green-deep);letter-spacing:-.02em;
+    max-width:720px;margin-bottom:1.8rem;animation:fadeUp .8s .1s ease both;
+  }
+  h1 em{font-style:italic;color:var(--green-soft);}
+  .hero-desc{
+    font-size:1.05rem;font-weight:300;color:var(--text-mid);line-height:1.85;
+    max-width:540px;margin-bottom:2.8rem;animation:fadeUp .8s .2s ease both;
+  }
+  .hero-actions{display:flex;gap:1rem;flex-wrap:wrap;animation:fadeUp .8s .3s ease both;}
+  .btn-primary{
+    padding:.9rem 2rem;background:var(--green-deep);color:#fff;
+    border-radius:100px;font-weight:600;font-size:.88rem;text-decoration:none;letter-spacing:.04em;
+    transition:background .2s,transform .15s,box-shadow .2s;
+    box-shadow:0 4px 22px rgba(31,64,39,.28);
+  }
+  .btn-primary:hover{background:var(--green-mid);transform:translateY(-2px);box-shadow:0 8px 30px rgba(31,64,39,.3);}
+  .btn-outline{
+    padding:.9rem 2rem;border:1.5px solid var(--green-deep);color:var(--green-deep);
+    border-radius:100px;font-weight:600;font-size:.88rem;text-decoration:none;letter-spacing:.04em;
+    transition:background .2s,transform .15s;
+  }
+  .btn-outline:hover{background:var(--green-pale);transform:translateY(-2px);}
+  .hero-stats{display:flex;gap:3rem;margin-top:4rem;animation:fadeUp .8s .4s ease both;flex-wrap:wrap;}
+  .hero-stat .num{
+    font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:600;
+    color:var(--green-deep);display:block;line-height:1;
+  }
+  .hero-stat .label{font-size:.75rem;color:var(--text-muted);letter-spacing:.07em;text-transform:uppercase;margin-top:4px;}
+
+  /* ── SECTION BASE ── */
+  section{padding:6rem 5%;}
+  .section-max{max-width:1200px;margin:0 auto;}
+  .section-tag{font-size:.7rem;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--green-soft);margin-bottom:1rem;display:block;}
+  h2{
+    font-family:'Cormorant Garamond',serif;font-size:clamp(1.9rem,4vw,3.1rem);
+    font-weight:300;color:var(--green-deep);line-height:1.14;letter-spacing:-.01em;
+  }
+  h2 em{font-style:italic;}
+
+  /* ── SOBRE NÓS ── */
+  .about{background:var(--cream);}
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;margin-top:4rem;}
+  .about-visual{
+    position:relative;border-radius:24px;overflow:hidden;
+    background:linear-gradient(135deg,var(--green-pale) 0%,var(--green-ghost) 100%);
+    padding:3rem 2.5rem;display:flex;flex-direction:column;gap:1.5rem;
+  }
+  .timeline-item{
+    display:flex;gap:1.2rem;align-items:flex-start;
+    padding:1.1rem 1.3rem;background:#fff;border-radius:14px;
+    border-left:3px solid var(--green-soft);
+    box-shadow:0 2px 12px rgba(31,64,39,.06);
+  }
+  .timeline-item .year{
+    font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;
+    color:var(--green-soft);line-height:1;min-width:52px;
+  }
+  .timeline-item p{font-size:.82rem;color:var(--text-mid);line-height:1.65;}
+  .timeline-item strong{display:block;font-size:.88rem;font-weight:600;color:var(--green-deep);margin-bottom:3px;}
+  .about-text h2{margin-bottom:1.5rem;}
+  .about-text p{font-size:.98rem;color:var(--text-mid);line-height:1.9;margin-bottom:1.2rem;font-weight:300;}
+  .pillar-list{margin-top:2rem;display:flex;flex-direction:column;gap:.9rem;}
+  .pillar{
+    display:flex;gap:1rem;align-items:flex-start;
+    padding:1rem 1.2rem;background:var(--green-ghost);
+    border-radius:14px;border-left:3px solid var(--green-soft);
+  }
+  .pillar-icon{width:34px;height:34px;border-radius:50%;background:var(--green-pale);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .pillar-icon svg{width:16px;height:16px;stroke:var(--green-deep);fill:none;stroke-width:1.8;}
+  .pillar-body h4{font-size:.85rem;font-weight:600;color:var(--green-deep);margin-bottom:3px;}
+  .pillar-body p{font-size:.8rem;color:var(--text-muted);line-height:1.6;}
+
+  /* ── ECOEXISTÊNCIA SECTION ── */
+  .eco{background:var(--green-ghost);}
+  .eco-intro{max-width:700px;margin:1.5rem 0 3.5rem;}
+  .eco-intro p{font-size:1rem;color:var(--text-mid);line-height:1.9;font-weight:300;}
+  .eco-triad{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-bottom:3.5rem;}
+  .triad-card{
+    background:#fff;border-radius:22px;padding:2.2rem 1.8rem;
+    border:1px solid var(--border);text-align:center;
+    transition:transform .22s,box-shadow .22s;
+  }
+  .triad-card:hover{transform:translateY(-5px);box-shadow:0 14px 42px rgba(31,64,39,.1);}
+  .triad-icon{
+    width:64px;height:64px;border-radius:50%;margin:0 auto 1.2rem;
+    background:var(--green-pale);display:flex;align-items:center;justify-content:center;
+  }
+  .triad-icon svg{width:28px;height:28px;stroke:var(--green-deep);fill:none;stroke-width:1.6;}
+  .triad-card h3{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:400;color:var(--green-deep);margin-bottom:.7rem;}
+  .triad-card p{font-size:.82rem;color:var(--text-muted);line-height:1.75;}
+  .values-title{text-align:center;margin-bottom:2.5rem;}
+  .values-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;}
+  .value-chip{
+    background:#fff;border-radius:14px;padding:1.2rem 1rem;
+    border:1px solid var(--border);text-align:center;
+    transition:background .2s,border-color .2s;
+  }
+  .value-chip:hover{background:var(--green-pale);border-color:var(--green-light);}
+  .value-chip .vc-num{
+    font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:600;
+    color:var(--green-light);display:block;line-height:1;
+  }
+  .value-chip h5{font-size:.8rem;font-weight:600;color:var(--green-deep);margin:.4rem 0 .4rem;}
+  .value-chip p{font-size:.72rem;color:var(--text-muted);line-height:1.5;}
+
+  /* ── EIXOS DE ATUAÇÃO ── */
+  .eixos{background:var(--cream);}
+  .eixos-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem;margin-top:3rem;}
+  .eixo-card{
+    background:var(--green-ghost);border-radius:18px;padding:1.6rem 1.4rem;
+    border:1px solid var(--border);transition:transform .2s,box-shadow .2s,background .2s;
+    cursor:default;
+  }
+  .eixo-card:hover{transform:translateY(-4px);box-shadow:0 10px 32px rgba(31,64,39,.1);background:#fff;}
+  .eixo-card .eixo-icon{font-size:1.6rem;margin-bottom:.8rem;display:block;}
+  .eixo-card h4{font-size:.92rem;font-weight:600;color:var(--green-deep);margin-bottom:.4rem;}
+  .eixo-card p{font-size:.78rem;color:var(--text-muted);line-height:1.65;}
+
+  /* ── FASES ── */
+  .fases{background:var(--green-deep);color:#fff;}
+  .fases .section-tag{color:var(--green-light);}
+  .fases h2{color:#fff;margin-bottom:1rem;}
+  .fases-lead{color:rgba(255,255,255,.7);font-size:.98rem;font-weight:300;max-width:560px;margin-bottom:3.5rem;line-height:1.8;}
+  .fases-timeline{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;position:relative;}
+  .fases-timeline::before{
+    content:'';position:absolute;top:28px;left:0;right:0;height:1px;
+    background:rgba(255,255,255,.15);
+  }
+  .fase-item{position:relative;}
+  .fase-dot{
+    width:18px;height:18px;border-radius:50%;
+    background:rgba(255,255,255,.15);border:2px solid rgba(255,255,255,.3);
+    margin-bottom:1.5rem;position:relative;z-index:1;
+    transition:background .2s,border-color .2s;
+  }
+  .fase-item:hover .fase-dot{background:var(--green-soft);border-color:var(--green-light);}
+  .fase-badge{
+    display:inline-block;font-size:.65rem;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;padding:.25rem .7rem;
+    background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);
+    border-radius:100px;color:var(--green-light);margin-bottom:.8rem;
+  }
+  .fase-item h4{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:.6rem;}
+  .fase-item p{font-size:.8rem;color:rgba(255,255,255,.6);line-height:1.7;}
+
+  /* ── ODS ── */
+  .ods{background:var(--green-ghost);}
+  .ods-grid{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2.5rem;}
+  .ods-badge{
+    padding:.5rem 1.1rem;background:#fff;border:1px solid var(--border);
+    border-radius:100px;font-size:.8rem;font-weight:600;color:var(--green-mid);
+    transition:background .2s,color .2s;
+  }
+  .ods-badge:hover{background:var(--green-deep);color:#fff;}
+
+  /* ── GESTÃO ── */
+  .gestao{background:var(--cream);}
+  .gestao-text{max-width:700px;margin:1.5rem 0 3rem;}
+  .gestao-text p{font-size:.98rem;color:var(--text-mid);line-height:1.9;font-weight:300;margin-bottom:1rem;}
+  .gestao-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem;}
+  .g-stat{
+    background:var(--green-ghost);border-radius:18px;padding:2rem 1.5rem;
+    border:1px solid var(--border);text-align:center;
+  }
+  .g-stat .big{
+    font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:600;
+    color:var(--green-deep);display:block;line-height:1;margin-bottom:.4rem;
+  }
+  .g-stat p{font-size:.8rem;color:var(--text-muted);line-height:1.5;}
+  .estados{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:2rem;}
+  .estado-tag{
+    padding:.45rem 1rem;background:var(--green-pale);border:1px solid var(--green-light);
+    border-radius:100px;font-size:.8rem;font-weight:600;color:var(--green-deep);
+  }
+
+  /* ── TRANSPARÊNCIA ── */
+  .transparency{background:var(--green-deep);color:#fff;}
+  .transparency .section-tag{color:var(--green-light);}
+  .transparency h2{color:#fff;margin-bottom:1rem;}
+  .transparency .lead{color:rgba(255,255,255,.7);font-size:.98rem;font-weight:300;max-width:560px;margin-bottom:3rem;line-height:1.8;}
+  .transp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+  .transp-card{
+    background:rgba(255,255,255,.07);border-radius:18px;
+    border:1px solid rgba(255,255,255,.12);padding:1.8rem;transition:background .2s;
+  }
+  .transp-card:hover{background:rgba(255,255,255,.12);}
+  .transp-card .icon{font-size:1.6rem;margin-bottom:.9rem;}
+  .transp-card h4{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:.45rem;}
+  .transp-card p{font-size:.8rem;color:rgba(255,255,255,.6);line-height:1.7;}
+  .doc-link{
+    margin-top:1.1rem;display:inline-flex;align-items:center;gap:5px;
+    font-size:.75rem;font-weight:600;color:var(--green-light);text-decoration:none;
+    border-bottom:1px solid rgba(152,204,168,.3);padding-bottom:2px;transition:border-color .2s;
+  }
+  .doc-link:hover{border-color:var(--green-light);}
+
+  /* ── CONTATO ── */
+  .contact{background:var(--cream);}
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;margin-top:3rem;align-items:start;}
+  .contact-info p{font-size:.98rem;color:var(--text-mid);line-height:1.85;font-weight:300;margin-bottom:2rem;}
+  .contact-items{display:flex;flex-direction:column;gap:.9rem;}
+  .contact-item{
+    display:flex;gap:1rem;align-items:flex-start;
+    padding:1rem;background:var(--green-ghost);border-radius:14px;border:1px solid var(--border);
+  }
+  .ci-icon{
+    width:38px;height:38px;border-radius:10px;background:var(--green-pale);
+    flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  }
+  .ci-icon svg{width:17px;height:17px;stroke:var(--green-deep);fill:none;stroke-width:1.8;}
+  .contact-item h5{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted);margin-bottom:3px;}
+  .contact-item a,.contact-item span{font-size:.88rem;color:var(--green-deep);text-decoration:none;font-weight:500;}
+  .invite-box{
+    margin-top:2rem;padding:2rem;background:var(--green-deep);border-radius:20px;color:#fff;
+  }
+  .invite-box h4{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;margin-bottom:.8rem;}
+  .invite-box p{font-size:.82rem;color:rgba(255,255,255,.72);line-height:1.7;margin-bottom:1.3rem;}
+  .invite-cta{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:.75rem 1.5rem;background:var(--green-soft);color:#fff;
+    border-radius:100px;font-size:.85rem;font-weight:600;text-decoration:none;
+    transition:background .2s;
+  }
+  .invite-cta:hover{background:var(--green-light);color:var(--green-deep);}
+  .contact-form{background:var(--green-ghost);border-radius:24px;padding:2.4rem;border:1px solid var(--border);}
+  .contact-form h3{font-family:'Cormorant Garamond',serif;font-size:1.55rem;font-weight:400;color:var(--green-deep);margin-bottom:1.5rem;}
+  .form-group{margin-bottom:1.1rem;}
+  .form-group label{display:block;font-size:.75rem;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--text-muted);margin-bottom:.45rem;}
+  .form-group input,.form-group textarea,.form-group select{
+    width:100%;padding:.8rem .95rem;
+    background:#fff;border:1px solid var(--border);border-radius:10px;
+    font-family:'Plus Jakarta Sans',sans-serif;font-size:.88rem;color:var(--text-dark);
+    transition:border-color .2s,box-shadow .2s;outline:none;
+  }
+  .form-group input:focus,.form-group textarea:focus,.form-group select:focus{
+    border-color:var(--green-soft);box-shadow:0 0 0 3px rgba(95,153,112,.14);
+  }
+  .form-group textarea{min-height:100px;resize:vertical;}
+  .form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;}
+  .form-submit{
+    width:100%;padding:.95rem;background:var(--green-deep);color:#fff;
+    border:none;border-radius:100px;font-family:'Plus Jakarta Sans',sans-serif;
+    font-size:.88rem;font-weight:600;letter-spacing:.06em;cursor:pointer;
+    transition:background .2s,transform .15s;
+  }
+  .form-submit:hover{background:var(--green-mid);transform:translateY(-1px);}
+
+  /* ── FOOTER ── */
+  footer{background:var(--green-deep);color:rgba(255,255,255,.6);padding:3.5rem 5% 2rem;}
+  .footer-top{
+    display:flex;justify-content:space-between;align-items:flex-start;
+    gap:3rem;flex-wrap:wrap;margin-bottom:3rem;
+    padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.1);
+  }
+  .footer-brand{max-width:300px;}
+  .footer-brand .logo-text{
+    font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;
+    color:#fff;display:block;margin-bottom:.2rem;
+  }
+  .footer-brand .tagline{font-size:.78rem;color:rgba(255,255,255,.5);letter-spacing:.06em;text-transform:uppercase;margin-bottom:.9rem;}
+  .footer-brand p{font-size:.82rem;line-height:1.7;}
+  .footer-links{display:flex;gap:4rem;flex-wrap:wrap;}
+  .footer-col h5{font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:1rem;}
+  .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.55rem;}
+  .footer-col a{font-size:.83rem;color:rgba(255,255,255,.65);text-decoration:none;transition:color .2s;}
+  .footer-col a:hover{color:#fff;}
+  .footer-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+  .footer-bottom p{font-size:.76rem;}
+  .footer-cnpj{font-size:.73rem;color:rgba(255,255,255,.32);}
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+  .fade-up{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease;}
+  .fade-up.visible{opacity:1;transform:none;}
+
+  /* ── RESPONSIVE ── */
+  @media(max-width:1024px){
+    .eixos-grid{grid-template-columns:repeat(2,1fr);}
+    .values-grid{grid-template-columns:repeat(2,1fr);}
+    .eco-triad{grid-template-columns:1fr;}
+    .fases-timeline{grid-template-columns:repeat(2,1fr);}
+    .fases-timeline::before{display:none;}
+  }
+  @media(max-width:768px){
+    .nav-links,.nav-cta{display:none;}
+    .hamburger{display:flex;}
+    .about-grid,.contact-grid{grid-template-columns:1fr;gap:3rem;}
+    .transp-grid{grid-template-columns:1fr;}
+    .gestao-stats{grid-template-columns:1fr 1fr;}
+    .eixos-grid{grid-template-columns:1fr;}
+    .fases-timeline{grid-template-columns:1fr;}
+    .form-row{grid-template-columns:1fr;}
+    .footer-top{flex-direction:column;}
+    .footer-links{gap:2rem;}
+    .hero-stats{gap:2rem;}
+  }
+  .mobile-menu{
+    display:none;position:fixed;top:70px;left:0;right:0;
+    background:rgba(253,250,246,.97);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);padding:1.5rem 5% 2rem;
+    z-index:99;flex-direction:column;gap:1.1rem;
+  }
+  .mobile-menu.open{display:flex;}
+  .mobile-menu a{font-size:.95rem;font-weight:500;color:var(--text-dark);text-decoration:none;padding:.45rem 0;border-bottom:1px solid var(--border);}
+  .mobile-menu .btn-primary{text-align:center;margin-top:.5rem;}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 2L4 8v12h16V8z" stroke-linejoin="round"/><circle cx="12" cy="12" r="3"/></svg>
+    </div>
+    <span class="nav-logo-text">Instituto Aletheico</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre nós</a></li>
+    <li><a href="#ecoexistencia">Ecoexistência</a></li>
+    <li><a href="#eixos">Eixos</a></li>
+    <li><a href="#transparencia">Transparência</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+  <a class="nav-cta" href="#contato">Faça parte</a>
+  <button class="hamburger" aria-label="Menu" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#sobre" onclick="toggleMenu()">Sobre nós</a>
+  <a href="#ecoexistencia" onclick="toggleMenu()">Ecoexistência</a>
+  <a href="#eixos" onclick="toggleMenu()">Eixos de Atuação</a>
+  <a href="#transparencia" onclick="toggleMenu()">Transparência</a>
+  <a href="#contato" onclick="toggleMenu()">Contato</a>
+  <a class="btn-primary" href="#contato" onclick="toggleMenu()">Faça parte desta sinfonia</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <svg class="hero-orbs" viewBox="0 0 580 580" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="290" cy="290" r="230" stroke-width="1" opacity=".45"/>
+    <circle cx="290" cy="290" r="170" stroke-width="1" opacity=".38"/>
+    <circle cx="290" cy="290" r="110" stroke-width="1" opacity=".3"/>
+    <circle cx="290" cy="290" r="55"  stroke-width="1.5" opacity=".5"/>
+  </svg>
+  <div class="hero-content">
+    <div class="hero-tag">Organização sem fins lucrativos · CNPJ 84.783.026/0001-43</div>
+    <h1>Redesenhando as relações entre<br><em>Indivíduo, Sociedade</em><br>e Meio Ambiente</h1>
+    <p class="hero-desc">O Instituto Aletheico nasce da busca pela verdade — <em>aletheia</em>, em grego. Por meio do conceito de Ecoexistência, promovemos um novo modelo de sociedade onde toda forma de vida floresce em harmonia.</p>
+    <div class="hero-actions">
+      <a class="btn-primary" href="#ecoexistencia">Conheça a Ecoexistência</a>
+      <a class="btn-outline" href="#contato">Faça parte</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="num">1992</span><span class="label">Fundação das raízes</span></div>
+      <div class="hero-stat"><span class="num">14</span><span class="label">Eixos de atuação</span></div>
+      <div class="hero-stat"><span class="num">3</span><span class="label">Estados brasileiros</span></div>
+      <div class="hero-stat"><span class="num">17</span><span class="label">ODS da ONU alinhados</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SOBRE NÓS -->
+<section class="about" id="sobre">
+  <div class="section-max">
+    <div class="about-grid">
+      <div class="about-visual fade-up">
+        <div class="timeline-item">
+          <span class="year">1992</span>
+          <div>
+            <strong>Associação Beneficente</strong>
+            <p>Nasce em Barbosa Ferraz, PR, como associação de moradores, fortalecendo laços comunitários e promovendo qualidade de vida local.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="year">2015</span>
+          <div>
+            <strong>Crise e resistência</strong>
+            <p>Crises políticas e econômicas desafiam a entidade. A observação das rupturas sociais, ambientais e humanas revela a necessidade de um novo caminho.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="year">2020</span>
+          <div>
+            <strong>A pandemia e o renascimento</strong>
+            <p>O isolamento da COVID-19 torna inviável a estrutura anterior — e acende o sonho de ressignificar a missão com um propósito mais amplo.</p>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <span class="year">2025</span>
+          <div>
+            <strong>Instituto Aletheico</strong>
+            <p>Nasce o Instituto: um renascimento fundamentado na verdade, no pensamento crítico e na ação consciente pela Ecoexistência universal.</p>
+          </div>
+        </div>
+      </div>
+      <div class="about-text fade-up">
+        <span class="section-tag">Nossa história</span>
+        <h2>Um renascimento<br>forjado nos<br><em>desafios do tempo</em></h2>
+        <p>O Instituto Aletheico representa mais do que uma continuidade da antiga Associação Beneficente do Conjunto Barbosa Ferraz — é um renascimento. As crises que pareciam intransponíveis tornaram-se o combustível de um sonho: criar um novo modelo de organização social, mais forte e resiliente.</p>
+        <p>Nosso nome vem do grego <em>aletheia</em> — verdade. É o valor que orienta cada projeto, cada parceria e cada decisão que tomamos na caminhada rumo ao horizonte utópico da Ecoexistência.</p>
+        <div class="pillar-list">
+          <div class="pillar">
+            <div class="pillar-icon">
+              <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            </div>
+            <div class="pillar-body">
+              <h4>Missão</h4>
+              <p>Identificar, congregar e potencializar os diferentes sonhos de criação de um novo modelo de sociedade humana guiada pela compreensão da Ecoexistência universal.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">
+              <svg viewBox="0 0 24 24"><path d="M1 6s4-4 10-4 10 4 10 4v14s-4-4-10-4S1 20 1 20z"/></svg>
+            </div>
+            <div class="pillar-body">
+              <h4>Visão</h4>
+              <p>Ser referência na construção de um novo modelo de sociedade baseado na Ecoexistência, onde o conhecimento ancestral e a inovação caminhem juntos.</p>
+            </div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">
+              <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            </div>
+            <div class="pillar-body">
+              <h4>Gestão</h4>
+              <p>Estrutura democrática e inclusiva — majoritariamente composta por mulheres e jovens — distribuída em Alagoas, Paraná e São Paulo.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ECOEXISTÊNCIA -->
+<section class="eco" id="ecoexistencia">
+  <div class="section-max">
+    <span class="section-tag">O conceito central</span>
+    <h2>Ecoexistência</h2>
+    <div class="eco-intro">
+      <p>Cada existência está ligada a todas as outras existências, coexistindo no Universo, formando uma rede que denominamos Ecoexistência. O Instituto busca harmonizar as relações entre os integrantes desta rede — promovendo práticas que respeitem essa interdependência e fortaleçam um modelo de vida sustentável e regenerativo.</p>
+    </div>
+    <div class="eco-triad fade-up">
+      <div class="triad-card">
+        <div class="triad-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.58-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <h3>Indivíduo</h3>
+        <p>No cerne da Ecoexistência está a pergunta "Quem sou eu?". O Instituto fomenta a autonomia intelectual e social, capacitando cada pessoa a compreender seu lugar no mundo e seu papel ativo na teia da vida.</p>
+      </div>
+      <div class="triad-card">
+        <div class="triad-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+        <h3>Sociedade</h3>
+        <p>A sociedade é o tecido que conecta indivíduos, comunidades e culturas. O Instituto fortalece laços comunitários, promove justiça social e fomenta a construção de um modelo de convivência baseado na equidade e na colaboração.</p>
+      </div>
+      <div class="triad-card">
+        <div class="triad-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><path d="M12 22V12M8 12h8"/></svg>
+        </div>
+        <h3>Meio Ambiente</h3>
+        <p>O Meio Ambiente, para o Instituto, é o Universo em sua totalidade. Cada ação humana reverbera nesse todo. A Ecoexistência propõe a transição da exploração para a cooperação — do consumo para a sustentabilidade consciente.</p>
+      </div>
+    </div>
+
+    <div class="values-title fade-up">
+      <span class="section-tag" style="justify-content:center;display:flex;">7 valores</span>
+      <h2>Os princípios que <em>nos guiam</em></h2>
+    </div>
+    <div class="values-grid fade-up">
+      <div class="value-chip">
+        <span class="vc-num">01</span>
+        <h5>Ecoexistência</h5>
+        <p>Harmonia entre Indivíduo, Sociedade e Meio Ambiente</p>
+      </div>
+      <div class="value-chip">
+        <span class="vc-num">02</span>
+        <h5>Autonomia Intelectual e Social</h5>
+        <p>Construção do pensamento crítico e emancipação coletiva</p>
+      </div>
+      <div class="value-chip">
+        <span class="vc-num">03</span>
+        <h5>Justiça Social e Equidade</h5>
+        <p>Combate às desigualdades estruturais do modelo atual</p>
+      </div>
+      <div class="value-chip">
+        <span class="vc-num">04</span>
+        <h5>Sucessão de Saberes</h5>
+        <p>Continuidade do conhecimento como alicerce civilizatório</p>
+      </div>
+      <div class="value-chip">
+        <span class="vc-num">05</span>
+        <h5>Colaboração e Conexão</h5>
+        <p>Tecer redes de cooperação entre indivíduos e organizações</p>
+      </div>
+      <div class="value-chip">
+        <span class="vc-num">06</span>
+        <h5>Verdade e Transparência</h5>
+        <p>Ética, honestidade e compromisso com o desvelamento da verdade</p>
+      </div>
+      <div class="value-chip">
+        <span class="vc-num">07</span>
+        <h5>Resiliência e Transformação</h5>
+        <p>Adaptar-se, aprender e seguir em constante evolução</p>
+      </div>
+      <div class="value-chip" style="background:var(--green-deep);border-color:var(--green-deep);">
+        <span class="vc-num" style="color:var(--green-light);">∞</span>
+        <h5 style="color:#fff;">Horizonte Utópico</h5>
+        <p style="color:rgba(255,255,255,.65);">A jornada que nos impulsiona a questionar, aprender e evoluir</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EIXOS DE ATUAÇÃO -->
+<section class="eixos" id="eixos">
+  <div class="section-max">
+    <span class="section-tag">Nossa atuação</span>
+    <h2>14 eixos de <em>transformação</em></h2>
+    <div class="eixos-grid fade-up">
+      <div class="eixo-card">
+        <span class="eixo-icon">🏗️</span>
+        <h4>Arquitetura e Urbanismo</h4>
+        <p>Bioarquitetura, urbanismo regenerativo e permacultura para criar espaços que respeitem os ciclos naturais e fortaleçam vínculos sociais.</p>
+      </div>
+      <div class="eixo-card">
+        <span class="eixo-icon">🔬</span>
+        <h4>Ciência e Pesquisa</h4>
+        <p>Parcerias com universidades e centros de pesquisa para embasar todas as ações em evidências científicas e metodologias sustentáveis.</p>
+      </div>
+      <div class="eixo-card">
+        <span class="eixo-icon">🎭</span>
+        <h4>Cultura</h4>
+        <p>Valorização dos saberes tradicionais e das culturas ancestrais, criando pontes entre tradição e inovação com respeito à identidade de cada povo.</p>
+      </div>
+      <div class="eixo-card">
+        <span class="eixo-icon">⚖️</span>
+        <h4>Desenvolvimento de Políticas Públicas</h4>
+        <p>Transformar práticas e aprendizados em diretrizes institucionais que influenciem políticas em escala local, regional e nacional.</p>
+      </div>
+      <div class="eixo-card">
+        <span class="eixo-icon">📚</span>
+        <h4>Educação</h4>
+        <p>Formação integral nos três níveis: Indivíduo (autoconhecimento), Sociedade (formação política e profissional) e Meio Ambiente (reconexão com a natureza).</p>
+      </div>
+      <div class="eixo-card">
+        <span class="eixo-icon">♀️</span>
+        <h4>Equidade de Gênero</h4>
+        <p>Autonomia e empoderamento das mulheres, enfrentamento à violência de gênero e valorização dos saberes femininos, especialmente no contexto rural.</p>
+      </div>
+      <div class="eixo-card">
+        <span class="eixo-icon">🌱</span>
+        <h4>Formação de Lideranças</h4>
+        <p>Capacitação de jovens e mulheres para atuarem como catalisadores de mudanças sustentáveis em seus territórios e espaços decisórios.</p>
+      </div>
+      <div class="eixo-card">
+        <span class="eixo-icon">🤝</span>
+        <h4>Masculinidade</h4>
+        <p>Trabalho educativo e reflexivo com homens de todas as idades para desconstruir estereótipos e promover relações saudáveis e não violentas.</p>
+      </div>
+      <div class="eixo-card">
+        <span class="eixo-icon">🌿</span>
+        <h4>Preservação e Restauração</h4>
+        <p>Reflorestamento com espécies nativas, corredores ecológicos, manejo sustentável do solo e proteção de nascentes nos biomas brasileiros.</p>
+      </div>
+      <div class="eixo-card">
+        <span class="eixo-icon">💚</span>
+        <h4>Saúde e Bem-Estar</h4>
+        <p>Cuidado integral que reconhece a interdependência entre saúde individual, dinâmicas sociais e equilíbrio ambiental, valorizando as medicinas tradicionais.</p>
+      </div>
+      <div class="eixo-card">
+        <span class="eixo-icon">🌾</span>
+        <h4>Sucessão Rural</h4>
+        <p>Empoderamento de jovens rurais — especialmente mulheres — para garantir a continuidade das atividades agrícolas e a transmissão de saberes entre gerações.</p>
+      </div>
+      <div class="eixo-card">
+        <span class="eixo-icon">💻</span>
+        <h4>Tecnologia</h4>
+        <p>Uso consciente, criativo e colaborativo das ferramentas digitais, promovendo a soberania tecnológica das comunidades e a agricultura de precisão agroecológica.</p>
+      </div>
+      <div class="eixo-card">
+        <span class="eixo-icon">🍯</span>
+        <h4>Trabalho e Renda</h4>
+        <p>Apicultura, meliponicultura, fruticultura com espécies nativas e agricultura familiar integrada como eixos de geração de renda sustentável.</p>
+      </div>
+      <div class="eixo-card">
+        <span class="eixo-icon">🏕️</span>
+        <h4>Turismo Sustentável</h4>
+        <p>Transformar as riquezas naturais e culturais das comunidades em oportunidades de desenvolvimento econômico e social aliadas à conservação ambiental.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FASES DE IMPLEMENTAÇÃO -->
+<section class="fases" id="fases">
+  <div class="section-max">
+    <span class="section-tag">Plano de ação</span>
+    <h2>Fases de <em>Implementação</em></h2>
+    <p class="fases-lead">Um plano estruturado em quatro etapas que integram desenvolvimento teórico e validação prática — adaptável, eficiente e alinhado às realidades de cada comunidade.</p>
+    <div class="fases-timeline fade-up">
+      <div class="fase-item">
+        <div class="fase-dot"></div>
+        <span class="fase-badge">Fase 0 · Em curso</span>
+        <h4>Conceituação</h4>
+        <p>Desenvolvimento teórico simultâneo à validação prática. Construção de conceitos, metodologias e parcerias com universidades e órgãos públicos.</p>
+      </div>
+      <div class="fase-item">
+        <div class="fase-dot"></div>
+        <span class="fase-badge">Fase 1</span>
+        <h4>Piloto</h4>
+        <p>Implementação prática em escala reduzida. Capacitação comunitária, apicultura, plantio de nativas e formação dos primeiros agentes multiplicadores.</p>
+      </div>
+      <div class="fase-item">
+        <div class="fase-dot"></div>
+        <span class="fase-badge">Fase 2</span>
+        <h4>Teste e Posicionamento em Escala</h4>
+        <p>Consolidação e expansão. Turismo sustentável, crédito de carbono e ampliação das redes colaborativas para outras regiões.</p>
+      </div>
+      <div class="fase-item">
+        <div class="fase-dot"></div>
+        <span class="fase-badge">Fase 3</span>
+        <h4>Transição para Escala</h4>
+        <p>Sistematização do modelo replicável. Publicação científica, influência em políticas públicas e formação de referência nacional e internacional.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ODS -->
+<section class="ods" id="ods">
+  <div class="section-max fade-up">
+    <span class="section-tag">Agenda global</span>
+    <h2>Alinhados aos <em>ODS da ONU</em></h2>
+    <p style="margin-top:1rem;font-size:.98rem;color:var(--text-mid);max-width:620px;line-height:1.85;font-weight:300;">A Ecoexistência conecta nossas ações às principais agendas globais de desenvolvimento sustentável, respondendo diretamente a 13 dos 17 Objetivos de Desenvolvimento Sustentável.</p>
+    <div class="ods-grid">
+      <span class="ods-badge">ODS 1 · Erradicação da Pobreza</span>
+      <span class="ods-badge">ODS 2 · Fome Zero</span>
+      <span class="ods-badge">ODS 3 · Saúde e Bem-Estar</span>
+      <span class="ods-badge">ODS 4 · Educação de Qualidade</span>
+      <span class="ods-badge">ODS 5 · Igualdade de Gênero</span>
+      <span class="ods-badge">ODS 8 · Trabalho Decente e Crescimento</span>
+      <span class="ods-badge">ODS 10 · Redução das Desigualdades</span>
+      <span class="ods-badge">ODS 11 · Cidades e Comunidades Sustentáveis</span>
+      <span class="ods-badge">ODS 12 · Consumo e Produção Responsáveis</span>
+      <span class="ods-badge">ODS 13 · Ação Climática</span>
+      <span class="ods-badge">ODS 15 · Vida Terrestre</span>
+      <span class="ods-badge">ODS 16 · Paz, Justiça e Instituições Eficazes</span>
+      <span class="ods-badge">ODS 17 · Parcerias e Meios de Implementação</span>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSPARÊNCIA -->
+<section class="transparency" id="transparencia">
+  <div class="section-max">
+    <span class="section-tag">Prestação de contas</span>
+    <h2>Transparência como<br><em>pilar de existência</em></h2>
+    <p class="lead">O desvelamento da verdade é um pilar da nossa existência. Atuamos com transparência, coerência e responsabilidade em todas as nossas ações.</p>
+    <div class="transp-grid fade-up">
+      <div class="transp-card">
+        <div class="icon">📊</div>
+        <h4>Relatório de Impacto</h4>
+        <p>Resultados quantitativos e qualitativos de todos os projetos e eixos de atuação realizados.</p>
+        <a class="doc-link" href="#">Em elaboração →</a>
+      </div>
+      <div class="transp-card">
+        <div class="icon">💼</div>
+        <h4>Demonstrações Financeiras</h4>
+        <p>Balanço patrimonial, demonstração de resultados e notas explicativas do Instituto.</p>
+        <a class="doc-link" href="#">Em elaboração →</a>
+      </div>
+      <div class="transp-card">
+        <div class="icon">📋</div>
+        <h4>Estatuto Social</h4>
+        <p>Documento constitutivo com finalidades, estrutura e governança do Instituto Aletheico.</p>
+        <a class="doc-link" href="#">Solicitar →</a>
+      </div>
+      <div class="transp-card">
+        <div class="icon">🌍</div>
+        <h4>Projeto Ecoexistência 1.04</h4>
+        <p>Documento fundacional completo com missão, visão, valores e eixos de atuação.</p>
+        <a class="doc-link" href="#">Download PDF →</a>
+      </div>
+      <div class="transp-card">
+        <div class="icon">📅</div>
+        <h4>Atas e Deliberações</h4>
+        <p>Registros das decisões da Diretoria Geral, Administração, Conselho Fiscal e Assembleia Geral.</p>
+        <a class="doc-link" href="#">Solicitar →</a>
+      </div>
+      <div class="transp-card">
+        <div class="icon">🔍</div>
+        <h4>CNPJ e Certificações</h4>
+        <p>CNPJ 84.783.026/0001-43 · Certificações e títulos que credenciam nossa atuação institucional.</p>
+        <a class="doc-link" href="#">Visualizar →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTATO -->
+<section class="contact" id="contato">
+  <div class="section-max">
+    <span class="section-tag">Vamos embarcar nessa viagem?</span>
+    <div class="contact-grid">
+      <div class="contact-info fade-up">
+        <h2>Você pode ser a<br><em>engrenagem que faltava</em></h2>
+        <p>Como em um relógio onde cada peça é indispensável, cada organização, instituição e investidor que se junta ao Instituto Aletheico contribui com sua própria rotação única — e juntos construímos a sinfonia da Ecoexistência.</p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="ci-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.1 1.24 2 2 0 012.11 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006.16 6.16l1.27-.45a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <h5>WhatsApp</h5>
+              <a href="https://wa.me/5544988374267">(44) 98837-4267</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <h5>E-mail</h5>
+              <a href="mailto:contato@institutoaletheico.org.br">contato@institutoaletheico.org.br</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <h5>Presença</h5>
+              <span>Alagoas · Paraná · São Paulo</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon">
+              <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v16"/></svg>
+            </div>
+            <div>
+              <h5>CNPJ</h5>
+              <span>84.783.026/0001-43</span>
+            </div>
+          </div>
+        </div>
+        <div class="invite-box">
+          <h4>Junte-se a esta sinfonia</h4>
+          <p>Seja investidor, parceiro institucional, pesquisador, voluntário ou comunidade — cada ser contribui com sua nota única nesta melodia de transformação.</p>
+          <a class="invite-cta" href="https://wa.me/5544988374267">Conversar pelo WhatsApp →</a>
+        </div>
+      </div>
+
+      <div class="contact-form fade-up">
+        <h3>Envie uma mensagem</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Nome completo</label>
+            <input type="text" placeholder="Seu nome">
+          </div>
+          <div class="form-group">
+            <label>Organização</label>
+            <input type="text" placeholder="Empresa ou instituição">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" placeholder="seu@email.com">
+        </div>
+        <div class="form-group">
+          <label>Como quer contribuir?</label>
+          <select>
+            <option>Parceria institucional</option>
+            <option>Investimento / Doação</option>
+            <option>Pesquisa e ciência</option>
+            <option>Voluntariado</option>
+            <option>Imprensa</option>
+            <option>Outro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Mensagem</label>
+          <textarea placeholder="Conte-nos sobre seu interesse, seu sonho ou sua proposta de parceria..."></textarea>
+        </div>
+        <button class="form-submit" onclick="handleSubmit(this)">Enviar mensagem</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="logo-text">Instituto Aletheico</span>
+      <span class="tagline">Aletheia · Verdade · Ecoexistência</span>
+      <p>Redesenhando as relações entre Indivíduo, Sociedade e Meio Ambiente para um Brasil mais justo, sustentável e consciente.</p>
+      <div class="estados" style="margin-top:1.2rem;">
+        <span class="estado-tag" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15);color:rgba(255,255,255,.7);">Alagoas</span>
+        <span class="estado-tag" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15);color:rgba(255,255,255,.7);">Paraná</span>
+        <span class="estado-tag" style="background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.15);color:rgba(255,255,255,.7);">São Paulo</span>
+      </div>
+    </div>
+    <div class="footer-links">
+      <div class="footer-col">
+        <h5>Instituto</h5>
+        <ul>
+          <li><a href="#sobre">Nossa história</a></li>
+          <li><a href="#ecoexistencia">Ecoexistência</a></li>
+          <li><a href="#eixos">Eixos de atuação</a></li>
+          <li><a href="#transparencia">Transparência</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Eixos</h5>
+        <ul>
+          <li><a href="#eixos">Educação</a></li>
+          <li><a href="#eixos">Equidade de Gênero</a></li>
+          <li><a href="#eixos">Preservação e Restauração</a></li>
+          <li><a href="#eixos">Trabalho e Renda</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h5>Parceiros</h5>
+        <ul>
+          <li><a href="#contato">Como apoiar</a></li>
+          <li><a href="#contato">Pesquisa científica</a></li>
+          <li><a href="#contato">Voluntariado</a></li>
+          <li><a href="https://wa.me/5544988374267">WhatsApp</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Instituto Aletheico · Todos os direitos reservados · CNPJ 84.783.026/0001-43</p>
+    <p class="footer-cnpj">Organização sem fins lucrativos · Barbosa Ferraz, Paraná</p>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll',()=>{
+    document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>30);
+  });
+  function toggleMenu(){
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+  const observer=new IntersectionObserver((entries)=>{
+    entries.forEach((e,i)=>{
+      if(e.isIntersecting) setTimeout(()=>e.target.classList.add('visible'),i*80);
+    });
+  },{threshold:.1});
+  document.querySelectorAll('.fade-up').forEach(el=>observer.observe(el));
+  function handleSubmit(btn){
+    btn.textContent='✓ Mensagem enviada!';
+    btn.style.background='#3d6b4a';
+    setTimeout(()=>{btn.textContent='Enviar mensagem';btn.style.background='';},3500);
+  }
+  document.querySelectorAll('a[href^="#"]').forEach(a=>{
+    a.addEventListener('click',e=>{
+      const t=document.querySelector(a.getAttribute('href'));
+      if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}
+    });
+  });
+</script>
+</body>
+</html>
